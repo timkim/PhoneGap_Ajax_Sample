@@ -11,7 +11,19 @@
 				
 				ajax.onreadystatechange=function(){
 					if(ajax.readyState==4 && (ajax.status==200||ajax.status==0)){
-						document.getElementById('main').innerHTML = ajax.responseText;
+						eval('var data = ' + ajax.responseText + ';');
+						var theResults = data.results;
+						var theHTML = '';
+						for(var i=0;i<theResults.length;i++){
+							theHTML += ['<div class="tweet"',
+											'<div class="avatar"> <img src='+theResults[i].profile_image_url+' /></div>',
+											'<div class="tweet_content">',
+												'<h2>'+theResults[i].from_user+'</h2>',
+												'<p>'+theResults[i].text+'</p>',
+											'</div>',
+										'</div>'].join('');
+						}
+						document.getElementById('main').innerHTML = theHTML;
 					}
 				}
 			}
