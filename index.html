@@ -5,7 +5,15 @@
 		<script type="text/javascript" src="phonegap.js"></script>
         <script type="text/javascript">
 			function appReady(){
-
+				var ajax = new XMLHttpRequest();
+				ajax.open("GET","http://search.twitter.com/search.json?q=bacon",true);
+				ajax.send();
+				
+				ajax.onreadystatechange=function(){
+					if(ajax.readyState==4 && (ajax.status==200||ajax.status==0)){
+						document.getElementById('main').innerHTML = ajax.responseText;
+					}
+				}
 			}
             document.addEventListener("deviceready", appReady, false);
 			
